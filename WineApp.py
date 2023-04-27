@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-import dtreeviz
+
 
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -113,11 +113,3 @@ model_f1=round(f1_score(val_y, val_predictions)*100,2)
 
 st.write('Your model accuracy is',accuracy_score(val_y, val_predictions))
 
-###### Build decision tree ######
-viz = dtreeviz.model(winemodel,
-            train_x,
-            train_y,
-            feature_names = train_x.columns,
-            target_name = 'Wine categories',
-            class_names = ['Goon de Dorm', 'FS Cuvee'])
-viz.view()
