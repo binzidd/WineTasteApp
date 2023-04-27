@@ -9,8 +9,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score, RocCurveDisplay, confusion_matrix, ConfusionMatrixDisplay
 
-from streamlit_pandas_profiling import st_profile_report
-from ydata_profiling import profile_report
+# from streamlit_pandas_profiling import st_profile_report
+# from ydata_profiling import profile_report
 
 ###### Sidebar | Quality threshold ######
 st.sidebar.header('Wine Tasting with AI', help='A Machine 101 exercise')
