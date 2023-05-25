@@ -2,13 +2,13 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
+import altair as alt
 from matplotlib import pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score,confusion_matrix, ConfusionMatrixDisplay
-
 
 # from streamlit_pandas_profiling import st_profile_report
 # from ydata_profiling import profile_report
@@ -51,8 +51,8 @@ st.write('You went on the internet and found data for ~1,600 bottles of wine pre
 st.dataframe(wine)
 st.divider()
 # with st.expander('Data Profile Report'):
-    # pr = wine.profile_report()
-    # st_profile_report(pr)
+#     pr = wine.profile_report()
+#     st_profile_report(pr)
 
 
 ############################# Step 2 - Baseline #############################
@@ -167,7 +167,7 @@ st.write("""**75%** of the data is used to train the model
 
 **25%** is used to test the model 
 """)
-st.write("Find out more about [Train, Validation, Testing Splits](https://mlu-explain.github.io/decision-tree/)")
+st.write("Find out more about [Train, Validation, Testing Splits](https://mlu-explain.github.io/train-test-validation/)")
 
 st.subheader("Train the Model")
 
@@ -235,8 +235,33 @@ model_f1_rf=round(f1_score(val_y4, val_predict4)*100,2)
 ############################# Model Scoring #############################
 st.sidebar.subheader("Model Accuracy %")
 st.sidebar.write("*Adjust settings to the right* :blue[▶]")
-st.sidebar.write("Basline 🙈: ",50.0)
-st.sidebar.write('Decision Tree 1🌲', model_acc_ds1)
-st.sidebar.write('Decision Tree 2🌲', model_acc_ds2)
-st.sidebar.write('Decision Tree 3🌲', model_acc_ds3)
-st.sidebar.write('Random Forest 🌲🌲🌲🌲', model_acc_rf)
+# st.sidebar.write("Baseline 🙈: ",50.0)
+# st.sidebar.write('Decision Tree 1🌲', model_acc_ds1)
+# st.sidebar.write('Decision Tree 2🌲', model_acc_ds2)
+# st.sidebar.write('Decision Tree 3🌲', model_acc_ds3)
+# st.sidebar.write('Random Forest 🌲🌲🌲🌲', model_acc_rf)
+
+model_scores = pd.DataFrame(
+    [
+        ['Baseline 🙈', 50],
+        ['Decision🌲1', model_acc_ds1],
+        ['Decision🌲2', model_acc_ds2],
+        ['Decision🌲3', model_acc_ds3],
+        ['Random🌲🌲🌲', model_acc_rf]
+
+    ],
+    columns=['Model', 'Accuracy%'])
+
+base = alt.Chart(model_scores).encode(
+    alt.X('Accuracy%', title=""),
+    alt.Y('Model', title=''),
+    text='Accuracy%',
+    opacity=alt.value(0.7),
+).properties(
+    width=300)
+# .configure_axis(
+#     grid=False
+# )
+
+st.sidebar.altair_chart(base.mark_bar()+base.mark_text(align='left', dx=2))
+
