@@ -1,3 +1,4 @@
 scikit-learn
 streamlit_pandas_profiling
 ydata_profiling
+dtreeviz
